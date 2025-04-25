@@ -1,0 +1,5 @@
+citynoise_env/
+__pychache__/
+.history/
+data/
+model/
