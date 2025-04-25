@@ -36,5 +36,5 @@ st.sidebar.markdown(
 )
 
 st.sidebar.info(
-    "**Source code: [@repo](https://gitlab.com/mattummal/Woise.git)**", icon="💡"
+    "**Source code: [@repo](https://github.com/mattummal/city-noise-predictor.git)**", icon="💡"
 )
