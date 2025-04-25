@@ -1,7 +1,7 @@
 # City Noise Predictor: a Machine Learning WebApp
 
 
-The objective is to develop an application that predicts the noise level in Naamsestraat, Leuven. The prediction model will be based on forecast weather and air quality data. By utilising machine learning models, we aim to provide valuable insights into the noise levels in the city, enabling residents and authorities to better understand and manage noise pollution.
+The objective is to develop an application that predicts the noise level in a particular city. The prediction model will be based on forecast weather and air quality data. By utilising machine learning models, we aim to provide valuable insights into the noise levels in the city, enabling residents and authorities to better understand and manage noise pollution.
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://mda-woise.streamlit.app/)
 
@@ -57,32 +57,3 @@ The objective is to develop an application that predicts the noise level in Naam
    ├─ 5_model_predict_noise_types.ipynb
    └─ 6_test_predictions.ipynb
 ```
-
-
-## ⚙️ Installation guide
-
-To set up the project environment, follow these instructions:
-
-Clone the project repository
-```bash
-git clone https://gitlab.com/mattummal/Woise.git
-```
-Install the dependencies
-```bash
-python -m venv woise
-source woise/bin/activate  # Windows: \venv\scripts\activate
-pip install -r requirements.txt
-```
-Navigate into the "app" folder using the cd command:
-```bash
-cd app
-```
-
-then run the app locally:
-```bash
-streamlit run main.py
-```
-
-
-
-
