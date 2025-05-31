@@ -150,3 +150,51 @@ ax.set_xlabel('Weekday')
 ax.set_ylabel('Frequency')
 ax.set_title('Frequency of Noise event by Weekday', size=15)
 plt.show()
+
+file41.result_timestamp = pd.to_datetime(file41.result_timestamp)
+file41.date = pd.to_datetime(file41.date)
+
+aggregated_file41 = (
+	file41.groupby(['hour', 'weekday', 'date', 'noise_event', 'location'])
+	.size()
+	.reset_index(name='count')
+)
+weekday_order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+aggregated_file41['weekday'] = pd.Categorical(
+	aggregated_file41['weekday'], categories=weekday_order, ordered=True
+)
+heatmap_data = aggregated_file41.pivot_table(
+	index='location', columns='weekday', values='count', fill_value=0
+)
+# Create the heatmap using Plotly
+fig = px.imshow(
+	heatmap_data.values,
+	x=heatmap_data.columns,
+	y=heatmap_data.index,
+	labels=dict(x='Weekday', y='Location', color='Frequency'),
+	color_continuous_scale='YlOrRd',
+)
+
+# Set the title
+fig.update_layout(title='Frequency of Noise Events')
+
+# Group the data
+grouped = file41.groupby(['location', 'noise_event']).size().reset_index(name='count')
+
+# Create the bar plot using Plotly
+fig = px.bar(
+	grouped,
+	x='noise_event',
+	y='count',
+	color='location',
+	title='Frequency by Location and Noise Event',
+	labels={'noise_event': 'Noise Event', 'count': 'Frequency'},
+	height=600,
+	width=900,
+)
+
+# Customize the x-axis tick labels
+fig.update_layout(xaxis={'categoryorder': 'total descending'})
+
+# Show the plot
+fig.show()

@@ -173,10 +173,80 @@ noise_level_daily_mean = file40.copy()
 noise_level_daily_mean.rename(columns={'result_timestamp': 'datetime'}, inplace=True)
 noise_level_daily_mean.set_index('datetime', inplace=True)
 noise_level_daily_mean = noise_level_daily_mean[laf_cols].resample('D').mean()
-noise_level_daily_mean.head(3)
-
 
 sns.lineplot(data=noise_level_daily_mean)
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5), title='LAF values', frameon=False)
 plt.title('Mean LAF by date in all locations')
+plt.show()
+
+
+# set time as index
+meteo = pd.read_csv('meteo.csv')
+# show max columns
+pd.set_option('display.max_columns', None)
+meteo.set_index('datetime', inplace=True)
+# resample the data by day and take the mean
+lc_cols = [col for col in meteo.columns if col.startswith('LC')]
+meteo_daily_mean = meteo[lc_cols].resample('D').mean()
+meteo_hourly_mean = meteo[lc_cols].resample('H').mean()
+meteo_daily_mean.reset_index(inplace=True)
+meteo_hourly_mean.reset_index(inplace=True)
+meteo_hourly_mean.to_csv('meteo_hourly.csv')
+
+
+for var in lc_cols:
+	plt.figure()
+	sns.lineplot(data=meteo_daily_mean, x='datetime', y=meteo_daily_mean[var])
+	plt.title(col)
+	plt.xlabel('Date')
+	plt.ylabel(var)
+
+
+# Merge meteo daily data with mean daily noise level data
+noise_level_daily_mean.reset_index(inplace=True)
+meteo_noise_daily_mean = meteo_daily_mean.merge(
+	noise_level_daily_mean[['datetime', 'laf50_per_hour']], on=['datetime']
+)
+meteo_noise_daily_mean.head(3)
+
+
+plt.figure(figsize=(15, 12))
+palette = sns.diverging_palette(20, 220, n=256)
+corr = meteo_noise_daily_mean.corr(method='pearson')
+sns.heatmap(corr, annot=True, fmt='.2f', cmap=palette, center=0, annot_kws={'size': 8})
+plt.title(
+	'Correlation Matrix between daily meteorological data and LAF value',
+	size=15,
+	weight='bold',
+)
+plt.show()
+
+# resample the data by hour and take the mean
+lc_cols = [col for col in meteo.columns if col.startswith('LC')]
+meteo_hourly_mean = meteo[lc_cols].resample('H').mean()
+meteo_hourly_mean.reset_index(inplace=True)
+
+# Resample noise level by day in all locations
+laf_cols = [col for col in file40.columns if col.startswith('laf')]
+noise_level_hourly_mean = file40.copy()
+noise_level_hourly_mean.rename(columns={'result_timestamp': 'datetime'}, inplace=True)
+noise_level_hourly_mean.set_index('datetime', inplace=True)
+noise_level_hourly_mean = noise_level_hourly_mean[laf_cols].resample('H').mean()
+noise_level_hourly_mean.to_csv('file40_hourly.csv')
+
+# Merge meteo daily data with mean daily noise level data
+noise_level_hourly_mean.reset_index(inplace=True)
+meteo_noise_hourly_mean = meteo_hourly_mean.merge(
+	noise_level_hourly_mean[['datetime', 'laf50_per_hour']], on=['datetime']
+)
+
+plt.figure(figsize=(15, 12))
+palette = sns.diverging_palette(20, 220, n=256)
+corr = meteo_noise_hourly_mean.corr(method='pearson')
+sns.heatmap(corr, annot=True, fmt='.2f', cmap=palette, center=0, annot_kws={'size': 8})
+plt.title(
+	'Correlation Matrix between hourly meteorological data and LAF value',
+	size=15,
+	weight='bold',
+)
 plt.show()
