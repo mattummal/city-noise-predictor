@@ -87,7 +87,7 @@ def get_forecast_hourly_weather(url):
 	return df
 
 
-def process_file(file_path):
+def process_file(file_path: str, object_id_dict: dict):
 	print(f'Processing: {file_path}')
 	df = pd.read_csv(file_path, delimiter=';')
 

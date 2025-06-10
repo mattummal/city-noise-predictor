@@ -20,7 +20,7 @@ from datetime import datetime, timedelta, timezone
 
 import pandas as pd
 
-from utils import create_violin_plot, get_forecast_hourly_weather, merge_csv_files
+from utils import create_violin_plot, get_forecast_hourly_weather, merge_csv_files, process_file
 
 url = 'https://archive-api.open-meteo.com/v1/archive?latitude=50.88&longitude=4.70&start_date=2022-01-01&end_date=2022-12-31&timezone=Europe%2FBerlin&hourly=temperature_2m,relativehumidity_2m,dewpoint_2m,apparent_temperature,pressure_msl,surface_pressure,precipitation,snowfall,cloudcover,cloudcover_low,cloudcover_mid,cloudcover_high,shortwave_radiation,direct_radiation,diffuse_radiation,direct_normal_irradiance,windspeed_10m,winddirection_10m,windgusts_10m'
 weather_data = get_forecast_hourly_weather(url)
@@ -181,7 +181,7 @@ def gather_file_42():
 		file_list = filelist(month)
 
 		for file in file_list:
-			df_resampled = process_file(file)
+			df_resampled = process_file(file, object_id_dict)
 			# concatenate
 			concatenated_df = pd.concat([concatenated_df, df_resampled])
 			concatenated_df = concatenated_df[
