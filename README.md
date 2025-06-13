@@ -35,7 +35,6 @@ The objective is to develop an application that predicts the noise level in a pa
 │  ├─ prediction_noise.py
 │  ├─ requirements.txt
 │  ├─ weather.py
-│  └─ woise-logo.png
 ├─ data
 │  ├─ file40
 │  ├─ file41.csv
@@ -44,7 +43,7 @@ The objective is to develop an application that predicts the noise level in a pa
 │  ├─ processed_file40_data.csv
 │  ├─ processed_file41_data.csv
 │  ├─ processed_file42_data.csv
-│  └─ processed_weather_data_leuven.csv
+│  └─ processed_weather_data.csv
 ├─ model
 │  ├─ model_noise_level_file40
 │  ├─ model_noise_level_file42

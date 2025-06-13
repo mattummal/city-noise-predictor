@@ -1,2 +1,10 @@
 [theme]
-base = "light"
+base = "dark"
+primaryColor = "#00FFAA"         # A bright aqua green for highlights
+backgroundColor = "#0E1117"      # Deep dark gray for a modern look
+secondaryBackgroundColor = "#1A1D23"  # Slightly lighter gray for widgets
+textColor = "#FAFAFA"            # Off-white text for good readability
+font = "sans serif"              # Clean modern font
+fontSize = 16                   # Slightly larger for comfort
+borderColor = "#3C4043"         # Subtle border tone
+borderRadius = 8                # Rounded corners for a modern look
