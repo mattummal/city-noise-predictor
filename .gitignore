@@ -3,3 +3,5 @@ __pychache__/
 .history/
 data/
 model/
+
+.DS_Store
